@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>MUSISDA</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Google OAuth Library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- 부트페이 SDK -->
+    <script src="https://js.bootpay.co.kr/bootpay-5.1.4.min.js"></script>
+    <!-- 카카오 주소 API -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="login-container" style="display: none;">
+            <div class="login-logo">MUSISDA</div>
+            
+            <div id="login-form">
+                <h2>로그인</h2>
+                <p class="login-subtitle">Please log in to continue</p>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>아이디</label>
+                        <input type="email" id="login-email" placeholder="아이디를 입력해주세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label>비밀번호</label>
+                        <input type="password" id="login-password" placeholder="비밀번호를 입력해주세요" required>
+                        <span class="password-hint">대소문자, 숫자를 포함하여 8글자 이상 입력해주세요.</span>
+                    </div>
+                    <div class="form-remember">
+                        <label><input type="checkbox"> 아이디 저장</label>
+                        <a href="#" class="forgot-password">비밀번호를 잊으셨나요?</a>
+                    </div>
+                    <button type="submit" class="btn-login">Log In</button>
+                </form>
+                <button class="btn-google-login" onclick="showGoogleLogin()">
+                    <span class="google-icon">G</span> 구글로 로그인
+                </button>
+                <div class="login-footer">
+                    <a href="#" onclick="showSignupForm()">회원가입</a>
+                    <a href="#" onclick="showAdminLoginForm()">관리자 모드</a>
+                </div>
+            </div>
+            
+            <div id="login-options" style="display: none;"></div>
+            
+            <div id="signup-form" style="display: none;">
+                <h2>회원가입</h2>
+                <form onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label>아이디</label>
+                        <input type="email" id="signup-email" placeholder="아이디를 입력해주세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label>비밀번호</label>
+                        <input type="password" id="signup-password" placeholder="비밀번호를 입력해주세요" required>
+                        <span class="password-hint">대소문자, 숫자를 포함하여 8글자 이상 입력해주세요.</span>
+                    </div>
+                    <div class="form-group">
+                        <label>비밀번호 확인</label>
+                        <input type="password" id="signup-password-confirm" placeholder="비밀번호를 다시 한번 입력해주세요" required>
+                    </div>
+                    <div class="form-group">
+                    <label>사용자명</label>
+                    <input type="text" id="signup-username" placeholder="사용자명을 입력해주세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label>전화번호</label>
+                        <input type="tel" id="signup-tel" placeholder="전화번호를 입력해주세요">
+                    </div>
+                    <button type="submit" class="btn-signup">회원가입 하기</button>
+                    <button type="button" class="btn-cancel" onclick="showLoginOptions()">취소</button>
+                </form>
+            </div>
+            
+            <div id="admin-login-form" style="display: none;">
+                <h2>관리자 로그인</h2>
+                <form onsubmit="handleAdminLogin(event)">
+                    <div class="form-group">
+                        <label>관리자 아이디</label>
+                        <input type="email" id="admin-email" placeholder="관리자 아이디를 입력해주세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label>관리자 비밀번호</label>
+                        <input type="password" id="admin-password" placeholder="관리자 비밀번호를 입력해주세요" required>
+                    </div>
+                    <button type="submit" class="btn-login">관리자 로그인</button>
+                    <button type="button" class="btn-cancel" onclick="showLoginOptions()">취소</button>
+                </form>
+            </div>
+            
+            <div id="google-login-container" style="display: none;">
+                <h2>Google로 로그인</h2>
+                <div id="google-login-btn"></div>
+                <button class="btn-cancel" onclick="showLoginOptions()">취소</button>
+            </div>
+        </div>
+        
+        <div id="main-container" style="display: none;">
+            <header class="header">
+                <div class="logo" onclick="showView('products')">MUSISDA</div>
+                <nav class="nav-menu">
+                    <span id="user-info"></span>
+                    <a href="#" onclick="logout()">Logout</a>
+                    <a href="#" id="cart-btn">장바구니</a>
+                    <a href="#" id="qna-btn">문의하기</a>  <!-- 이 줄 추가 -->
+                    <a href="#" id="mypage-btn">마이페이지</a>
+                    <a href="#" id="admin-btn" style="display: none;">관리자</a>
+                </nav>
+            </header>
+            
+            <div id="product-list-container"></div>
+            <div id="product-detail-container" style="display: none;"></div>
+            <div id="product-form-container" style="display: none;"></div>
+            <div id="cart-container" style="display: none;"></div>
+            <div id="checkout-container" style="display: none;"></div>
+            <div id="order-list-container" style="display: none;"></div>
+            <div id="mypage-container" style="display: none;"></div>
+            <div id="wishlist-container" style="display: none;"></div>
+            <div id="qna-container" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils/Authenticate.js"></script>
+    <script src="js/components/ProductDetail.js"></script>
+    <script src="js/components/ProductList.js"></script>
+    <script src="js/components/Auth.js"></script>
+    <script src="js/components/GoogleLoginBtn.js"></script>
+    <script src="js/components/ProductForm.js"></script>
+    <script src="js/components/Cart.js"></script>
+    <script src="js/components/Checkout.js"></script>
+    <script src="js/components/MyPage.js"></script>
+    <script src="js/components/QnA.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
