@@ -176,3 +176,14 @@ BOOTPAY_PRIVATE_KEY=your_bootpay_key
 - **Backend**: FastAPI, MySQL, 인증 시스템
 - **Frontend**: Vanilla JS, UI/UX 디자인
 - **DevOps**: Docker, 배포 환경 구성
+- 
+
+## 👥 팀원 소개
+
+|           이충민           |           정혜인           |           이채은           |           강병훈           |
+| :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------: |
+|      <img src="https://github.com/user-attachments/assets/profile1" width="120px;" alt=""/>      |      <img src="https://github.com/user-attachments/assets/profile2" width="120px;" alt=""/>      |      <img src="https://github.com/user-attachments/assets/profile3" width="120px;" alt=""/>      |      <img src="https://github.com/user-attachments/assets/profile4" width="120px;" alt=""/>      |
+|                            BE / 백엔드 개발                           |                            FE / 프론트엔드 개발                         |                            FE / 프론트엔드 개발                         |                            BE / 백엔드 개발                           |
+
+**공통 담당**: 배포 및 운영 환경 구성
+
